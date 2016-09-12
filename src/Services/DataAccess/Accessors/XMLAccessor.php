@@ -21,6 +21,11 @@ class XMLAccessor implements DataAccessInterface
      */
     protected $filepath;
 
+    /**
+     * [__construct description].
+     *
+     * @param [type] $filepath [description]
+     */
     public function __construct($filepath)
     {
         $this->filepath = $filepath;
@@ -42,7 +47,7 @@ class XMLAccessor implements DataAccessInterface
                 'id' => $k,
                 'title' => (string) $product['title'],
                 'price' => (float) $product['price'],
-                'category' => (string) $product->category
+                'category' => (string) $product->category,
             ];
         }
 
@@ -57,7 +62,6 @@ class XMLAccessor implements DataAccessInterface
      * Update an element.
      *
      * @param string $type       [description]
-     * @param int    $id         [description]
      * @param array  $attributes [description]
      *
      * @return bool [description]
@@ -65,23 +69,22 @@ class XMLAccessor implements DataAccessInterface
     public function update($type, $order)
     {
         $this->simpleXML->total = $order->getTotal();
-        foreach($this->simpleXML->products->product as $product) {
-        	foreach ($order->getProducts() as $productB) {
-        		if ($product['title'] == $productB->getTitle()) {
-	        		if ($productB->isIncluded()) {
-	        			$product['included'] = 'true';
-	        		} else {
-	        			$product['included'] = 'false';
-	        		}
-	        		if ($productB->getDiscount()) {
-	        			$product['discount'] = $productB->getDiscount();
-	        		}
-        		}	
-        	}
+        foreach ($this->simpleXML->products->product as $product) {
+            foreach ($order->getProducts() as $productB) {
+                if ($product['title'] == $productB->getTitle()) {
+                    if ($productB->isIncluded()) {
+                        $product['included'] = 'true';
+                    } else {
+                        $product['included'] = 'false';
+                    }
+                    if ($productB->getDiscount()) {
+                        $product['discount'] = $productB->getDiscount();
+                    }
+                }
+            }
         }
         $this->simpleXML->asXML($this->filepath);
 
         return true;
     }
-
 }

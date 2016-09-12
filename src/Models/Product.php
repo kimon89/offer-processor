@@ -7,11 +7,41 @@ namespace OfferProcessor\Models;
  */
 class Product
 {
+    /**
+     * Id of product.
+     *
+     * @var int
+     */
     protected $id;
+    /**
+     * Category of product.
+     *
+     * @var string
+     */
     protected $category;
+    /**
+     * Price of product.
+     *
+     * @var float
+     */
     protected $price;
+    /**
+     * Title of product.
+     *
+     * @var string
+     */
     protected $title;
+    /**
+     * If a product should be included in the total amount calculations.
+     *
+     * @var bool
+     */
     protected $included = true;
+    /**
+     * The amount of discount.
+     *
+     * @var float
+     */
     protected $discount;
 
     /**
@@ -94,26 +124,41 @@ class Product
         $this->title = $title;
     }
 
-    public function setCheapest($cheapest)
-    {
-        $this->cheapest = $cheapest;
-    }
-
+    /**
+     * Returns if the product should be included.
+     *
+     * @return bool [description]
+     */
     public function isIncluded()
     {
         return $this->included;
     }
 
+    /**
+     * Sets if a product should be included or not.
+     *
+     * @param bool $included [description]
+     */
     public function setIncluded($included)
     {
         $this->included = $included;
     }
 
+    /**
+     * Returns the discount of the product.
+     *
+     * @return float [description]
+     */
     public function getDiscount()
     {
         return $this->discount;
     }
 
+    /**
+     * Sets the discount of the product.
+     *
+     * @param float $discount [description]
+     */
     public function setDiscount($discount)
     {
         $this->discount = $discount;

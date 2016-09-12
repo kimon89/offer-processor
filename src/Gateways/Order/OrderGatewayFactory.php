@@ -10,6 +10,13 @@ use OfferProcessor\Models\Order;
  */
 class OrderGatewayFactory
 {
+    /**
+     * Returns the order  gateway after injecting the data access.
+     *
+     * @param DataAccessInterface $dataAccess [description]
+     *
+     * @return OrderGateway [description]
+     */
     public function getGateway(DataAccessInterface $dataAccess)
     {
         return new OrderGateway($dataAccess);

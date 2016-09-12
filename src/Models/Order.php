@@ -52,7 +52,7 @@ class Order
     }
 
     /**
-     * Get the total amount.
+     * Get the total amount considering discounts and exclusions.
      *
      * @return float [description]
      */
@@ -62,13 +62,14 @@ class Order
         foreach ($this->products as $product) {
             if ($product->isIncluded()) {
                 if ($product->getDiscount()) {
-                    $total += $product->getPrice()-($product->getPrice()*$product->getDiscount());
+                    $total += $product->getPrice() - ($product->getPrice() * $product->getDiscount());
                 } else {
                     $total += $product->getPrice();
                 }
             }
         }
-        return $total;
+
+        return round($total, 2, PHP_ROUND_HALF_DOWN);
     }
 
     /**

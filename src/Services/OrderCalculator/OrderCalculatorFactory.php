@@ -29,9 +29,10 @@ class OrderCalculatorFactory
      */
     public function getCalculator($type)
     {
-    	if (isset($this->calculators[$type])) {
-        	return new $this->calculators[$type]();
-    	}
-    	return [];
+        if (isset($this->calculators[$type])) {
+            return new $this->calculators[$type]();
+        }
+
+        return [];
     }
 }

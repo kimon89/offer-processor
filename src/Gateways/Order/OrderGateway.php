@@ -19,6 +19,11 @@ class OrderGateway implements OrderGatewayInterface
      */
     protected $dataAccess;
 
+    /**
+     * Constructor.
+     *
+     * @param DataAccessInterface $dataAccess [description]
+     */
     public function __construct(DataAccessInterface $dataAccess)
     {
         $this->dataAccess = $dataAccess;
@@ -53,10 +58,9 @@ class OrderGateway implements OrderGatewayInterface
     }
 
     /**
-     * Update the total amount of an order.
+     * Update the data of an order.
      *
      * @param Order $order [description]
-     * @param float $total [description]
      *
      * @return bool [description]
      */

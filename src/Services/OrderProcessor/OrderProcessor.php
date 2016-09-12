@@ -12,11 +12,35 @@ use OfferProcessor\Gateways\Order\OrderGatewayFactory;
  */
 class OrderProcessor
 {
+    /**
+     * Parameters comming from the terminal.
+     *
+     * @var array
+     */
     protected $parameters;
+    /**
+     * The input loader.
+     *
+     * @var InputLoader
+     */
     protected $inputLoader;
+    /**
+     * Calculator factory.
+     *
+     * @var OrderCalculatorFactory
+     */
     protected $orderCalculatorFactory;
-    protected $orderCalculator;
+    /**
+     * Data access factory.
+     *
+     * @var DataAccessFactory
+     */
     protected $dataAccessFactory;
+    /**
+     * OderGatewayFactory.
+     *
+     * @var OrderGatewayFactory
+     */
     protected $orderGatewayFactory;
 
     public function __construct(
@@ -47,13 +71,13 @@ class OrderProcessor
      * total amount of the order.
      */
     public function process()
-    {	
+    {
         $dataAccess = $this->dataAccessFactory->getAccessor($this->parameters['path']);
         $orderGateway = $this->orderGatewayFactory->getGateway($dataAccess);
         $order = $orderGateway->getOrder();
         $orderCalculator = $this->orderCalculatorFactory->getCalculator($this->parameters['offer']);
         if (empty($orderCalculator)) {
-        	return;
+            return;
         }
         $order = $orderCalculator->calculate($order);
         $orderGateway->update($order);

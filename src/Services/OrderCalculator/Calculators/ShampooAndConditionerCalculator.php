@@ -10,7 +10,7 @@ use OfferProcessor\Models\Order;
  */
 class ShampooAndConditionerCalculator implements OrderCalculatorInterface
 {
-	protected $order;
+    protected $order;
     /**
      * Main calculation function.
      *
@@ -20,9 +20,10 @@ class ShampooAndConditionerCalculator implements OrderCalculatorInterface
      */
     public function calculate(Order $order)
     {
-    	$this->order = $order;
+        $this->order = $order;
 
         $this->detectCombos();
+
         return $order;
     }
 
