@@ -6,24 +6,23 @@ use OfferProcessor\Services\InputValidator\InputValidatorInterface;
 use OfferProcessor\Exceptions\InputValidator\CLI\MissingArgumentException;
 
 /**
- * Validates the parameters passed to the program.
+ * Validates the parameters passed to the program
  */
 class CLIValidator implements InputValidatorInterface
 {
-    /**
-     * Required parameters.
-     *
-     * @var array
-     */
+	/**
+	 * Required parameters
+	 * @var array
+	 */
     protected $required = [
         1 => 'filepath',
         2 => 'offer',
     ];
 
     /**
-     * Validates that all the required parameters exist.
-     *
-     * @param array $input [description]
+     * Validates that all the required parameters exist
+     * @param  array  $input [description]
+     * @return null        [description]
      */
     public function validate(array $input)
     {

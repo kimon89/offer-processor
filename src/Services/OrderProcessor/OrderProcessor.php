@@ -47,12 +47,15 @@ class OrderProcessor
      * total amount of the order.
      */
     public function process()
-    {
+    {	
         $dataAccess = $this->dataAccessFactory->getAccessor($this->parameters['path']);
         $orderGateway = $this->orderGatewayFactory->getGateway($dataAccess);
         $order = $orderGateway->getOrder();
         $orderCalculator = $this->orderCalculatorFactory->getCalculator($this->parameters['offer']);
-        $orderTotal = $orderCalculator->calculate($order);
-        $orderGateway->updateTotal($order, $orderTotal);
+        if (empty($orderCalculator)) {
+        	return;
+        }
+        $order = $orderCalculator->calculate($order);
+        $orderGateway->update($order);
     }
 }

@@ -16,8 +16,8 @@ class OrderCalculatorFactory
      * @var [type]
      */
     protected $calculators = [
-        '3for2' => ThreeForTwoCalculator::class,
-        'ShampooAndCond' => ShampooAndConditionerCalculator::class,
+        '3 for the price of 2' => ThreeForTwoCalculator::class,
+        'Buy Shampoo & get Conditioner for 50% off' => ShampooAndConditionerCalculator::class,
     ];
 
     /**
@@ -29,6 +29,9 @@ class OrderCalculatorFactory
      */
     public function getCalculator($type)
     {
-        return new $this->calculators[$type]();
+    	if (isset($this->calculators[$type])) {
+        	return new $this->calculators[$type]();
+    	}
+    	return [];
     }
 }

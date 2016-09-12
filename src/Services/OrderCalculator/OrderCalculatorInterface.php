@@ -14,7 +14,7 @@ interface OrderCalculatorInterface
      *
      * @param Order $order [description]
      *
-     * @return float [description]
+     * @return Order [description]
      */
     public function calculate(Order $order);
 }

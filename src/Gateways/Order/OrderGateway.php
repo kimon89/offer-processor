@@ -60,8 +60,8 @@ class OrderGateway implements OrderGatewayInterface
      *
      * @return bool [description]
      */
-    public function updateTotal(Order $order, $total)
+    public function update(Order $order)
     {
-        return $this->dataAccess->update('order', $order->getId(), ['total' => $total]);
+        return $this->dataAccess->update('order', $order);
     }
 }

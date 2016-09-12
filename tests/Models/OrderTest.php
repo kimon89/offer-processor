@@ -13,6 +13,8 @@ class OrderTest extends TestCase
 	{
 		$this->order = new Order();
 		$this->product = new Product();
+		$this->product->setPrice(10);
+		$this->order->setProducts([$this->product]);
 	}
 
 	public function testGetId()
@@ -23,8 +25,7 @@ class OrderTest extends TestCase
 
 	public function testGetTotal()
 	{
-		$this->order->setTotal(20);
-		$this->assertEquals(20, $this->order->getTotal());
+		$this->assertEquals(10, $this->order->getTotal());
 	}
 
 	public function testGetProducts()

@@ -8,8 +8,9 @@ use OfferProcessor\Models\Order;
 /**
  * This contains the logic for the shampoo and conditioner offer.
  */
-class ShampooAndConditionerCalculator extends AbstractCalculator implements OrderCalculatorInterface
+class ShampooAndConditionerCalculator implements OrderCalculatorInterface
 {
+	protected $order;
     /**
      * Main calculation function.
      *
@@ -19,30 +20,10 @@ class ShampooAndConditionerCalculator extends AbstractCalculator implements Orde
      */
     public function calculate(Order $order)
     {
-        $this->checkIfAlreadyApplied($order);
-        $combos = $this->getCombos($order->getProducts());
-        if (empty($combos)) {
-            return $order->getTotal();
-        }
+    	$this->order = $order;
 
-        return round($order->getTotal() - $this->getDiscount($combos), 2, PHP_ROUND_HALF_DOWN);
-    }
-
-    /**
-     * Get the discount amount.
-     *
-     * @param array $combos [description]
-     *
-     * @return [type] [description]
-     */
-    public function getDiscount(array $combos)
-    {
-        $discount = 0;
-        foreach ($combos as $combo) {
-            $discount += $combo['conditioner']->getPrice() * 0.50;
-        }
-
-        return $discount;
+        $this->detectCombos();
+        return $order;
     }
 
     /**
@@ -52,21 +33,16 @@ class ShampooAndConditionerCalculator extends AbstractCalculator implements Orde
      *
      * @return array Combos of shampoos and conditioners
      */
-    public function getCombos(array $products)
+    public function detectCombos()
     {
-        $combos = [];
-        foreach ($products as $k => $product) {
+        foreach ($this->order->getProducts() as $k => $product) {
             if ($product->getCategory() == 'Shampoo') {
-                foreach ($products as $key => $productB) {
+                foreach ($this->order->getProducts() as $key => $productB) {
                     if ($productB->getCategory() == 'Conditioner') {
-                        $combos[$k]['shampoo'] = $product;
-                        $combos[$k]['conditioner'] = $productB;
-                        unset($products[$key]);
+                        $productB->setDiscount(0.5);
                     }
                 }
             }
         }
-
-        return $combos;
     }
 }

@@ -58,7 +58,17 @@ class Order
      */
     public function getTotal()
     {
-        return $this->total;
+        $total = 0;
+        foreach ($this->products as $product) {
+            if ($product->isIncluded()) {
+                if ($product->getDiscount()) {
+                    $total += $product->getPrice()-($product->getPrice()*$product->getDiscount());
+                } else {
+                    $total += $product->getPrice();
+                }
+            }
+        }
+        return $total;
     }
 
     /**

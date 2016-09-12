@@ -15,13 +15,10 @@ interface DataAccessInterface
     public function get();
 
     /**
-     * Updates a single element.
-     *
-     * @param string $type       [description]
-     * @param int    $id         [description]
-     * @param array  $attributes [description]
-     *
-     * @return bool [description]
+     * [update description]
+     * @param  [type] $type [description]
+     * @param  [type] $data [description]
+     * @return [type]       [description]
      */
-    public function update($type, $id, array $attributes);
+    public function update($type, $data);
 }

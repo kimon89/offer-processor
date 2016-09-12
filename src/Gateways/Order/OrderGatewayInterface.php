@@ -24,5 +24,5 @@ interface OrderGatewayInterface
      *
      * @return bool [description]
      */
-    public function updateTotal(Order $order, $total);
+    public function update(Order $order);
 }

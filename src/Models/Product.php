@@ -11,6 +11,8 @@ class Product
     protected $category;
     protected $price;
     protected $title;
+    protected $included = true;
+    protected $discount;
 
     /**
      * Get the id.
@@ -90,5 +92,30 @@ class Product
     public function setTitle($title)
     {
         $this->title = $title;
+    }
+
+    public function setCheapest($cheapest)
+    {
+        $this->cheapest = $cheapest;
+    }
+
+    public function isIncluded()
+    {
+        return $this->included;
+    }
+
+    public function setIncluded($included)
+    {
+        $this->included = $included;
+    }
+
+    public function getDiscount()
+    {
+        return $this->discount;
+    }
+
+    public function setDiscount($discount)
+    {
+        $this->discount = $discount;
     }
 }

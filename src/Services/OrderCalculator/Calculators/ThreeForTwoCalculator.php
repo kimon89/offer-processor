@@ -8,8 +8,9 @@ use OfferProcessor\Models\Order;
 /**
  * This class holds the logic for the three for two offer.
  */
-class ThreeForTwoCalculator extends AbstractCalculator implements OrderCalculatorInterface
+class ThreeForTwoCalculator implements OrderCalculatorInterface
 {
+	protected $order;
     /**
      * Main method for calculation returns the new total amount.
      *
@@ -19,31 +20,35 @@ class ThreeForTwoCalculator extends AbstractCalculator implements OrderCalculato
      */
     public function calculate(Order $order)
     {
-        $this->checkIfAlreadyApplied($order);
-        if (count($order->getProducts()) < 3) {
-            return $order->getTotal();
+    	$this->order = $order;
+        if (count($this->order->getProducts()) < 3) {
+            return $this->order;
         }
-        $cheapestProduct = $this->getCheapestProduct($order->getProducts());
-
-        return round($order->getTotal() - $cheapestProduct->getPrice(), 2, PHP_ROUND_HALF_DOWN);
+        $this->removeCheapestProduct();
+        return $this->order;
     }
 
     /**
      * Returns the cheapest product from this order.
      *
-     * @param array $products [description]
-     *
-     * @return Product [description]
      */
-    public function getCheapestProduct(array $products)
+    public function removeCheapestProduct()
     {
-        $cheapestProduct = null;
-        foreach ($products as $product) {
-            if (empty($cheapestProduct) || $product->getPrice() < $cheapestProduct->getPrice()) {
-                $cheapestProduct = $product;
-            }
+    	$cheapest = null;
+        foreach ($this->order->getProducts() as $key => $product) {
+           	if (is_null($cheapest)) {
+           		$product->setIncluded(false);
+           		$cheapest = $key;
+           	} else {
+           		if ($product->getPrice() < $this->order->getProducts()[$cheapest]->getPrice()) {
+           			$product->setIncluded(false);
+           			$this->order->getProducts()[$cheapest]->setIncluded(true);
+           			$cheapest = $key;
+           		} else {
+           			$product->setIncluded(true);
+           			$this->order->getProducts()[$cheapest]->setIncluded(false);
+           		}
+           	}
         }
-
-        return $cheapestProduct;
     }
 }

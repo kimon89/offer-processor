@@ -42,7 +42,7 @@ class XMLAccessor implements DataAccessInterface
                 'id' => $k,
                 'title' => (string) $product['title'],
                 'price' => (float) $product['price'],
-                'category' => (string) $product->category,
+                'category' => (string) $product->category
             ];
         }
 
@@ -62,15 +62,26 @@ class XMLAccessor implements DataAccessInterface
      *
      * @return bool [description]
      */
-    public function update($type, $id, array $attributes)
+    public function update($type, $order)
     {
-        foreach ($attributes as $key => $attribute) {
-            if (isset($this->simpleXML->$key)) {
-                $this->simpleXML->$key = $attribute;
-            }
+        $this->simpleXML->total = $order->getTotal();
+        foreach($this->simpleXML->products->product as $product) {
+        	foreach ($order->getProducts() as $productB) {
+        		if ($product['title'] == $productB->getTitle()) {
+	        		if ($productB->isIncluded()) {
+	        			$product['included'] = 'true';
+	        		} else {
+	        			$product['included'] = 'false';
+	        		}
+	        		if ($productB->getDiscount()) {
+	        			$product['discount'] = $productB->getDiscount();
+	        		}
+        		}	
+        	}
         }
         $this->simpleXML->asXML($this->filepath);
 
         return true;
     }
+
 }
