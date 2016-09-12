@@ -4,6 +4,7 @@ namespace OfferProcessor\Services\OrderCalculator;
 
 use OfferProcessor\Services\OrderCalculator\Calculators\ThreeForTwoCalculator;
 use OfferProcessor\Services\OrderCalculator\Calculators\ShampooAndConditionerCalculator;
+use OfferProcessor\Exceptions\Calculators\CalculatorNotFoundException;
 
 /**
  * Factory class that creates a calculator class based on the input.
@@ -29,10 +30,14 @@ class OrderCalculatorFactory
      */
     public function getCalculator($type)
     {
+        if (empty($type)) {
+            return null;
+        }
+
         if (isset($this->calculators[$type])) {
             return new $this->calculators[$type]();
         }
 
-        return [];
+        throw new CalculatorNotFoundException($type);
     }
 }
