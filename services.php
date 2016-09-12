@@ -11,10 +11,10 @@ if ($container->getParameter('mode') == 'cli') {
     	->addArgument(new Reference('input_validator'));
 }
 
-    $container
+$container
     ->register('order_model', 'OfferProcessor\Models\Order');
 
-    $container
+$container
     ->register('product_model', 'OfferProcessor\Models\Product');
 
 $container

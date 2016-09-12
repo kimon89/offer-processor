@@ -16,8 +16,8 @@ class OrderCalculatorFactory
      * @var [type]
      */
     protected $calculators = [
-        '3 for the price of 2' => ThreeForTwoCalculator::class,
-        'Buy Shampoo & get Conditioner for 50% off' => ShampooAndConditionerCalculator::class,
+        '3for2' => ThreeForTwoCalculator::class,
+        'Conditioner50' => ShampooAndConditionerCalculator::class,
     ];
 
     /**

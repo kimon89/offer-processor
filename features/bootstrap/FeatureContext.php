@@ -15,7 +15,12 @@ class FeatureContext implements SnippetAcceptingContext
      */
     public function theOfferIsEnabled($offer)
     {
-        $this->offer = $offer;
+    	if ($offer == '3 for the price of 2'){
+    		$this->offer = '3for2';
+    	}
+    	if ($offer == 'Buy Shampoo & get Conditioner for 50% off'){
+    		$this->offer = 'Conditioner50';
+    	}
     }
 
     /**
