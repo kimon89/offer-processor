@@ -15,8 +15,7 @@
     },
     "authors": [
         {
-            "name": "Kimon Moutsakis",
-            "email": "moutsakisk@gmail.com"
+            "name": "Kimon Moutsakis"
         }
     ],
     "autoload": {
